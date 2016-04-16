@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             pageList = new ArrayList<>();
             pageList.add(new Page(new StoreFragment(), "Store"));
             pageList.add(new Page(new NewsFragment(), "News"));
-            pageList.add(new Page(new FoodFragment(), "Food"));
+            pageList.add(new Page(new FoodFragment(), "Aritcle"));
         }
 
         @Override

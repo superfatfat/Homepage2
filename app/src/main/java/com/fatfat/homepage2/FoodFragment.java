@@ -3,6 +3,8 @@ package com.fatfat.homepage2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +35,13 @@ public class FoodFragment extends Fragment {
 
     private List<Food> getFoodList(){
         List<Food> foodList = new ArrayList<>();
-        foodList.add(new Food(R.drawable.food1,"food1"));
-        foodList.add(new Food(R.drawable.food2,"food2"));
-        foodList.add(new Food(R.drawable.food3,"food3"));
-        foodList.add(new Food(R.drawable.food4,"food4"));
-        foodList.add(new Food(R.drawable.food5,"food5"));
-        foodList.add(new Food(R.drawable.food6,"food6"));
-        foodList.add(new Food(R.drawable.food7,"food7"));
+        foodList.add(new Food(R.drawable.food1,"Aritcle1"));
+        foodList.add(new Food(R.drawable.food2,"Aritcle2"));
+        foodList.add(new Food(R.drawable.food3,"Aritcle3"));
+        foodList.add(new Food(R.drawable.food4,"Aritcle4"));
+        foodList.add(new Food(R.drawable.food5,"Aritcle5"));
         return foodList;
+
     }
 
     @Override
@@ -71,7 +73,9 @@ public class FoodFragment extends Fragment {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             final Food food = foodList.get(position);
-            holder.ivImage.setImageResource(food.getImageId());
+            Bitmap b = readBitMap(context,food.getImageId());
+
+            holder.ivImage.setImageBitmap(b);
             holder.tvName.setText(food.getTitle());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +89,16 @@ public class FoodFragment extends Fragment {
                 }
             });
         }
+
+        public Bitmap readBitMap(Context context, int resId){
+            BitmapFactory.Options opt = new BitmapFactory.Options();
+            opt.inPreferredConfig = Bitmap.Config.RGB_565;
+            opt.inPurgeable = true;
+            opt.inInputShareable = true;
+
+            InputStream is = context.getResources().openRawResource(resId);
+            return BitmapFactory.decodeStream(is,null,opt);
+            }
 
 
 
